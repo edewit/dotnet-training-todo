@@ -38,6 +38,6 @@
         <TextBlock Text="Item Description" Grid.Row="1" HorizontalAlignment="Left" Grid.Column="0" VerticalAlignment="Center"  />
         <TextBox Name="ItemTextBox" Grid.Row="1" Grid.Column="1" />
         <Button Content="Add Item" Grid.Row="1" HorizontalAlignment="right" Grid.Column="2" Click="AddItem_OnClick" />
-        <CheckBox x:Name="ShowDone" Grid.Column="1"  Grid.ColumnSpan="2" Grid.Row="2" Content="Show done items" IsChecked="{Binding Path=ShowDoneItems, Mode=TwoWay}"/>
+        <CheckBox Grid.Column="1"  Grid.ColumnSpan="2" Grid.Row="2" Content="Show done items" Click="FilterList_OnClick"/>
     </Grid>
 </Page>

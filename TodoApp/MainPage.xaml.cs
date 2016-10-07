@@ -1,14 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
+using System.Linq;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
-using TodoApp.Annotations;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -19,6 +17,7 @@ namespace TodoApp
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        private List<TodoItem> _orginalList;
         public ObservableCollection<TodoItem> Items { get; }
 
         public MainPage()
@@ -36,6 +35,27 @@ namespace TodoApp
             }
             Items.Add(new TodoItem() { CreateTime = DateTime.Now, Description = ItemTextBox.Text});
             ItemTextBox.Text = "";
+        }
+
+        private void FilterList_OnClick(object sender, RoutedEventArgs e)
+        {
+            var isChecked = ((CheckBox) sender).IsChecked;
+            if (isChecked != null && (bool) isChecked)
+            {
+                var items = Items.Where(item => item.Done).ToList();
+                _orginalList = Items.ToList();
+                FilterList(items);
+            }
+            else
+            {
+                FilterList(_orginalList);
+            }
+        }
+
+        private void FilterList(IEnumerable<TodoItem> items)
+        {
+            Items.Clear();
+            items.ToList().ForEach(item => Items.Add(item));
         }
     }
 
